@@ -85,7 +85,7 @@ If you would like to type into multiple inputs you just add multiple objects to 
 This functions slightly differently. The first wordsAndTimes object from my-el-1 runs and types 'my el-1 preview 1' into the my-el-1 input. Then the wordsAndTimes object from my-el-2 is run and 'my el-2 preview 1' is typed into the my-el-2 input. Once both my-el-1 and my-el-2 have values typed into them, both inputs are cleared and the second objects from wordsAndTimes are run.
 
 The delay between when the words finish typing and when they are cleared can be set using the input-group-delay attribute. By default the time is 750ms.
-
+```<form name="my-form" input-previews="[{selector:'#subject',wordsAndTimes:[{word:'stuff',time:500},{word:'arubaaas',time:3000}]},{selector:'#predicate',wordsAndTimes:[{word:'things',time:500},{word:'askkk',time:3000}]}]" input-group-delay='1000' clear-on-focus="true"></form>```
 ##Attributes
 
 ### input-group-delay = 'timeInMs' (default: 750)
