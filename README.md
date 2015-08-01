@@ -13,6 +13,8 @@ Say you have an input called "Fruits". You might want to show people what types 
 ## Notes
 This is not pure AngularJS. I use setTimeout instead of $timeout because I don't think it's necessary to trigger a $digest for the text changes. I also don't use the actual model of the input. If someone wants to do it using the model, I'd be happy to merge that pull request.
 
+There is also a jQuery requirement in the current iteration but I will work on removing that in the future.
+
 ## Usage
 Add input-preview to an element (I choose the form element on my site). The value of input-preview is an array of objects matching the following format:
 
