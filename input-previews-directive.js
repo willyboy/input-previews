@@ -8,6 +8,7 @@ angular.module('input-previews',[]).directive('inputPreviews',function(){
 				totalTime = 0,
 				flatArray = [],
 				timeoutIds = [];
+				
 			function clearOnFocus(){
 				timeoutIds.forEach(function(id){
 					clearTimeout(id);
@@ -17,16 +18,7 @@ angular.module('input-previews',[]).directive('inputPreviews',function(){
 					$(obj.selector).val("").off("focus",clearOnFocus)
 				});
 			}
-			res.forEach(function(obj,index){//2n, 2n+1, 2n+2
-				if(eval($attr.clearOnFocus)){
-					$(obj.selector).on("focus",clearOnFocus);
-				}
-				obj.wordsAndTimes.forEach(function(wat,subIndex){
-					wat.selector = obj.selector;
-					flatArray.splice(index+(res.length*subIndex),0,wat);
-				});
-			});
-
+			
 			function showCharacters(el, word, time){
 				var timePerWord = Math.floor(time/word.length);
 				for(var i = 1; i<=word.length; i++){
@@ -37,17 +29,29 @@ angular.module('input-previews',[]).directive('inputPreviews',function(){
 					}(i));
 				}
 			}
-			for(var i = 0; i<res.length; i++){
+			
+			res.forEach(function(obj,index){//2n, 2n+1, 2n+2
+				if(eval($attr.clearOnFocus)){
+					$(obj.selector).on("focus",clearOnFocus);
+				}
+				obj.wordsAndTimes.forEach(function(wat,subIndex){
+					wat.selector = obj.selector;
+					flatArray.splice(index+(res.length*subIndex),0,wat);
+				});
+			});
+
+			for(var i = 0, len = res.length; i<len; i++){
 				//calculate keepAlive time (the length of time from when the text is displayed 
 				//to when the text is cleared)
-				var sliceArr = flatArray.slice(res.length*i, res.length+(i*res.length)).reverse(),
+				var sliceArr = flatArray.slice(len*i, len+(i*len)).reverse(),
 					totalTTL = 0;
 				sliceArr.forEach(function(el){
 					el.keepAlive = totalTTL+el.time;
 					totalTTL+=el.time;
 				});
 			}
-			angular.forEach(flatArray,function(wat,index){
+			
+			flatArray.forEach(function(wat,index){
 				timeoutIds.push(setTimeout(function(){
 					showCharacters($(wat.selector),wat.word,wat.time)
 					timeoutIds.push(setTimeout(function(){
